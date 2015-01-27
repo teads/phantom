@@ -18,7 +18,7 @@ object phantom extends Build {
   val Json4SVersion = "3.2.11"
   val ScalaMeterVersion = "0.6"
 
-  val publishUrl = "http://maven.websudos.co.uk"
+  val publishUrl = "http://nexus.teads.net/nexus/"
 
   val mavenPublishSettings : Seq[Def.Setting[_]] = Seq(
     credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
@@ -58,10 +58,10 @@ object phantom extends Build {
   val publishSettings : Seq[Def.Setting[_]] = Seq(
     credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
     publishTo <<= version { (v: String) => {
-        if (v.trim.endsWith("SNAPSHOT"))
-          Some("snapshots" at publishUrl + "/ext-snapshot-local")
-        else
-          Some("releases"  at publishUrl + "/ext-release-local")
+      if (v.trim.endsWith("SNAPSHOT"))
+        Some("snapshots" at publishUrl + "content/repositories/snapshots/")
+      else
+        Some("releases" at publishUrl + "content/repositories/releases/")
       }
     },
     publishMavenStyle := true,
@@ -71,7 +71,7 @@ object phantom extends Build {
 
   val sharedSettings: Seq[Def.Setting[_]] = Seq(
     organization := "com.websudos",
-    version := "1.5.0",
+    version := "1.5.0-teads1",
     scalaVersion := "2.11.4",
     crossScalaVersions := Seq("2.10.4", "2.11.4"),
     resolvers ++= Seq(
